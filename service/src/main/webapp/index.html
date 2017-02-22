@@ -1,0 +1,35 @@
+<script src="https://code.jquery.com/jquery-1.11.3.js"></script>
+<script src="12306test-2.1.js"></script>
+<table bgcolor='#eeeeee' class='gridtable' cellpadding='1' cellspacing='1'>
+	<tr>
+		<td colspan=2><div id="wb_validate"></div></td>
+	</tr>
+	<tr>
+		<td colspan=2><button onclick="submit()">确认</button>&nbsp;<span id="message"></span></td>
+	</tr>
+</table>
+<script>
+var defaluts = {
+	api:getContextPath()+'/client.validate',
+	select:'★'
+};
+function submit(){
+	$.fn.validate.submit($("#wb_validate"),getContextPath()+"/client.validate",{},function(status){
+		if(status=='SUCCESS'){
+			$("#message").html("<font color='green'>验证成功</font>");
+		}else{
+			$("#message").html("<font color='red'>验证失败</font>");
+			setTimeout($.fn.validate.reflush("wb_validate"), 5000);
+		}
+	});
+}
+$(document).ready(function(){
+	$("#wb_validate").validate();
+});
+function getContextPath() {
+    var pathName = document.location.pathname;
+    var index = pathName.substr(1).indexOf("/");
+    var result = pathName.substr(0,index+1);
+    return result;
+}
+</script>
